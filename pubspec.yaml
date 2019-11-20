@@ -1,8 +1,10 @@
 name: unix_domain_socket
-version: 0.0.0-dev
+version: 0.0.0-dev.1
 description: Native bindings for Unix domain sockets.
-author: Robert Ancell <robert.ancell@canonical.com>
 homepage: https://github.com/CanonicalLtd/unix_domain_socket.dart
 
 environment:
-  sdk: ">=2.0.0 <3.0.0"
+  sdk: '>=2.6.0 <3.0.0'
+
+dependencies:
+  ffi: ^0.1.3
