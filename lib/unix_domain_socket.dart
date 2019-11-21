@@ -1,8 +1,5 @@
 library unix_domain_socket;
 
-import "dart:convert";
-import "dart:io";
-import "dart:typed_data";
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
 
@@ -45,8 +42,9 @@ class UnixDomainSocket {
     final dylib = DynamicLibrary.open('libc.so.6');
     final writeP = dylib.lookupFunction<_WriteC, _WriteDart>('write');
     final bufferP = allocate<Uint8>(count: buffer.length);
-    for (int i = 0; i < buffer.length; i++)
+    for (int i = 0; i < buffer.length; i++) {
       bufferP[i] = buffer[i];
+    }
     int result = writeP(_fd, bufferP, buffer.length);
     free(bufferP);
     return result;
@@ -61,12 +59,13 @@ class UnixDomainSocket {
       var error_text = _strerror(_errno());
       print("Failed to read from socket: ${error_text}");
       free(bufferP);
-      return new List(0);
+      return List(0);
     }
 
-    List<int> result = new List(readCount);
-    for (int i = 0; i < readCount; i++)
+    List<int> result = List(readCount);
+    for (int i = 0; i < readCount; i++) {
       result[i] = bufferP[i];
+    }
     free(bufferP);
     return result;
   }
