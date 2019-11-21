@@ -7,9 +7,11 @@ typedef _CreateC = Int32 Function();
 typedef _CreateDart = int Function();
 typedef _ConnectC = Int32 Function(Int32 fd, Pointer<Utf8> path);
 typedef _ConnectDart = int Function(int fd, Pointer<Utf8> path);
-typedef _WriteC = Int32 Function(Int32 fd, Pointer<Uint8> data, Int32 data_length);
+typedef _WriteC = Int32 Function(
+    Int32 fd, Pointer<Uint8> data, Int32 data_length);
 typedef _WriteDart = int Function(int fd, Pointer<Uint8> data, int data_length);
-typedef _ReadC = Int32 Function(Int32 fd, Pointer<Uint8> data, Int32 data_length);
+typedef _ReadC = Int32 Function(
+    Int32 fd, Pointer<Uint8> data, Int32 data_length);
 typedef _ReadDart = int Function(int fd, Pointer<Uint8> data, int data_length);
 typedef _SendCredentialsC = Int32 Function(Int32 fd);
 typedef _SendCredentialsDart = int Function(int fd);
@@ -28,10 +30,12 @@ class UnixDomainSocket {
 
     final dylib = DynamicLibrary.open('libunixdomainsocket.so');
 
-    final createP = dylib.lookupFunction<_CreateC, _CreateDart>('UnixDomainSocket_Create');
+    final createP =
+        dylib.lookupFunction<_CreateC, _CreateDart>('UnixDomainSocket_Create');
     socket._fd = createP();
 
-    final connectP = dylib.lookupFunction<_ConnectC, _ConnectDart>('UnixDomainSocket_Connect');
+    final connectP = dylib
+        .lookupFunction<_ConnectC, _ConnectDart>('UnixDomainSocket_Connect');
     final pathP = Utf8.toUtf8(path);
     connectP(socket._fd, pathP);
 
@@ -72,7 +76,9 @@ class UnixDomainSocket {
 
   int sendCredentials() {
     final dylib = DynamicLibrary.open('libunixdomainsocket.so');
-    final sendCredentialsP = dylib.lookupFunction<_SendCredentialsC, _SendCredentialsDart>('UnixDomainSocket_SendCredentials');
+    final sendCredentialsP =
+        dylib.lookupFunction<_SendCredentialsC, _SendCredentialsDart>(
+            'UnixDomainSocket_SendCredentials');
     return sendCredentialsP(_fd);
   }
 
@@ -84,13 +90,15 @@ class UnixDomainSocket {
 
   int _errno() {
     final dylib = DynamicLibrary.open('libunixdomainsocket.so');
-    final getErrorP = dylib.lookupFunction<_GetErrorC, _GetErrorDart>('UnixDomainSocket_GetError');
+    final getErrorP = dylib
+        .lookupFunction<_GetErrorC, _GetErrorDart>('UnixDomainSocket_GetError');
     return getErrorP();
   }
 
-  String _strerror(int errnum){
+  String _strerror(int errnum) {
     final dylib = DynamicLibrary.open('libc.so.6');
-    final strerrorP = dylib.lookupFunction<_StrerrorC, _StrerrorDart>('strerror');
+    final strerrorP =
+        dylib.lookupFunction<_StrerrorC, _StrerrorDart>('strerror');
     var errorString = strerrorP(errnum);
     return Utf8.fromUtf8(errorString);
   }
