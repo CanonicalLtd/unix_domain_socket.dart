@@ -1,5 +1,5 @@
 name: unix_domain_socket
-version: 0.0.0-dev.3
+version: 0.0.0-dev.4
 description: Native bindings for Unix domain sockets.
 homepage: https://github.com/CanonicalLtd/unix_domain_socket.dart
 
