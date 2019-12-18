@@ -2,6 +2,7 @@ library unix_domain_socket;
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
+import 'package:packages/packages.dart';
 
 typedef _CreateC = Int32 Function();
 typedef _CreateDart = int Function();
@@ -28,7 +29,9 @@ class UnixDomainSocket {
   static UnixDomainSocket create(String path) {
     var socket = UnixDomainSocket();
 
-    final dylib = DynamicLibrary.open('libunixdomainsocket.so');
+    Packages packages = new Packages();
+    Package package = packages.resolvePackageUri(Uri.parse("package:unix_domain_socket"));
+    final dylib = DynamicLibrary.open(package.lib.path + '/libunixdomainsocket.so');
 
     final createP =
         dylib.lookupFunction<_CreateC, _CreateDart>('UnixDomainSocket_Create');
@@ -75,7 +78,9 @@ class UnixDomainSocket {
   }
 
   int sendCredentials() {
-    final dylib = DynamicLibrary.open('libunixdomainsocket.so');
+    Packages packages = new Packages();
+    Package package = packages.resolvePackageUri(Uri.parse("package:unix_domain_socket"));
+    final dylib = DynamicLibrary.open(package.lib.path + '/libunixdomainsocket.so');
     final sendCredentialsP =
         dylib.lookupFunction<_SendCredentialsC, _SendCredentialsDart>(
             'UnixDomainSocket_SendCredentials');
@@ -89,7 +94,9 @@ class UnixDomainSocket {
   }
 
   int _errno() {
-    final dylib = DynamicLibrary.open('libunixdomainsocket.so');
+    Packages packages = new Packages();
+    Package package = packages.resolvePackageUri(Uri.parse("package:unix_domain_socket"));
+    final dylib = DynamicLibrary.open(package.lib.path + '/libunixdomainsocket.so');
     final getErrorP = dylib
         .lookupFunction<_GetErrorC, _GetErrorDart>('UnixDomainSocket_GetError');
     return getErrorP();
