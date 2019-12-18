@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+DIR=$(cd `dirname $0` && pwd)
+cd $DIR/
+
+rm -rf ./build
+meson build
+ninja -C build
+
+cp ./build/lib/src/libunixdomainsocket.so ./lib/
