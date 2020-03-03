@@ -29,9 +29,15 @@ class UnixDomainSocket {
   static UnixDomainSocket create(String path) {
     var socket = UnixDomainSocket();
 
-    Packages packages = new Packages();
-    Package package = packages.resolvePackageUri(Uri.parse("package:unix_domain_socket"));
-    final dylib = DynamicLibrary.open(package.lib.path + '/libunixdomainsocket.so');
+    DynamicLibrary dylib;
+    try { 
+      Packages packages = new Packages();
+      Package package = packages.resolvePackageUri(Uri.parse("package:unix_domain_socket"));
+      dylib = DynamicLibrary.open(package.lib.path + '/libunixdomainsocket.so');
+    }
+    catch(e) { 
+      dylib = DynamicLibrary.open('libunixdomainsocket.so');
+    }
 
     final createP =
         dylib.lookupFunction<_CreateC, _CreateDart>('UnixDomainSocket_Create');
@@ -78,9 +84,16 @@ class UnixDomainSocket {
   }
 
   int sendCredentials() {
-    Packages packages = new Packages();
-    Package package = packages.resolvePackageUri(Uri.parse("package:unix_domain_socket"));
-    final dylib = DynamicLibrary.open(package.lib.path + '/libunixdomainsocket.so');
+    DynamicLibrary dylib;
+    try { 
+      Packages packages = new Packages();
+      Package package = packages.resolvePackageUri(Uri.parse("package:unix_domain_socket"));
+      dylib = DynamicLibrary.open(package.lib.path + '/libunixdomainsocket.so');
+    }
+    catch(e) { 
+      dylib = DynamicLibrary.open('libunixdomainsocket.so');
+    }
+
     final sendCredentialsP =
         dylib.lookupFunction<_SendCredentialsC, _SendCredentialsDart>(
             'UnixDomainSocket_SendCredentials');
@@ -94,9 +107,16 @@ class UnixDomainSocket {
   }
 
   int _errno() {
-    Packages packages = new Packages();
-    Package package = packages.resolvePackageUri(Uri.parse("package:unix_domain_socket"));
-    final dylib = DynamicLibrary.open(package.lib.path + '/libunixdomainsocket.so');
+    DynamicLibrary dylib;
+    try { 
+      Packages packages = new Packages();
+      Package package = packages.resolvePackageUri(Uri.parse("package:unix_domain_socket"));
+      dylib = DynamicLibrary.open(package.lib.path + '/libunixdomainsocket.so');
+    }
+    catch(e) { 
+      dylib = DynamicLibrary.open('libunixdomainsocket.so');
+    }
+
     final getErrorP = dylib
         .lookupFunction<_GetErrorC, _GetErrorDart>('UnixDomainSocket_GetError');
     return getErrorP();
