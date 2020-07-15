@@ -30,12 +30,12 @@ class UnixDomainSocket {
     var socket = UnixDomainSocket();
 
     DynamicLibrary dylib;
-    try { 
+    try {
       Packages packages = new Packages();
-      Package package = packages.resolvePackageUri(Uri.parse("package:unix_domain_socket"));
+      Package package =
+          packages.resolvePackageUri(Uri.parse("package:unix_domain_socket"));
       dylib = DynamicLibrary.open(package.lib.path + '/libunixdomainsocket.so');
-    }
-    catch(e) { 
+    } catch (e) {
       dylib = DynamicLibrary.open('libunixdomainsocket.so');
     }
 
@@ -85,12 +85,12 @@ class UnixDomainSocket {
 
   int sendCredentials() {
     DynamicLibrary dylib;
-    try { 
+    try {
       Packages packages = new Packages();
-      Package package = packages.resolvePackageUri(Uri.parse("package:unix_domain_socket"));
+      Package package =
+          packages.resolvePackageUri(Uri.parse("package:unix_domain_socket"));
       dylib = DynamicLibrary.open(package.lib.path + '/libunixdomainsocket.so');
-    }
-    catch(e) { 
+    } catch (e) {
       dylib = DynamicLibrary.open('libunixdomainsocket.so');
     }
 
@@ -108,12 +108,12 @@ class UnixDomainSocket {
 
   int _errno() {
     DynamicLibrary dylib;
-    try { 
+    try {
       Packages packages = new Packages();
-      Package package = packages.resolvePackageUri(Uri.parse("package:unix_domain_socket"));
+      Package package =
+          packages.resolvePackageUri(Uri.parse("package:unix_domain_socket"));
       dylib = DynamicLibrary.open(package.lib.path + '/libunixdomainsocket.so');
-    }
-    catch(e) { 
+    } catch (e) {
       dylib = DynamicLibrary.open('libunixdomainsocket.so');
     }
 
